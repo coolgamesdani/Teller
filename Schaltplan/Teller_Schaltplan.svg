@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" font-family="monospace" font-size="13">
+  <rect width="1100" height="760" fill="#fff"/>
+  <style>
+    .box{fill:#fffbe6;stroke:#222;stroke-width:1.5}
+    .vbat{stroke:#1a5fd0;stroke-width:3;fill:none}
+    .gnd{stroke:#333;stroke-width:2;fill:none}
+    .v5{stroke:#d02020;stroke-width:2.5;fill:none}
+    .v33{stroke:#e08000;stroke-width:2;fill:none}
+    .sig{stroke:#2a8a2a;stroke-width:1.2;fill:none}
+    .t{fill:#222}.h{font-weight:bold;font-size:14px}
+    .vb{fill:#1a5fd0;font-weight:bold}.r5{fill:#d02020;font-weight:bold}
+    .note{fill:#666;font-size:11px}
+  </style>
+
+  <text x="20" y="28" class="h" font-size="18">Teller – Schaltplan (aus Platinenlayout rekonstruiert)</text>
+
+  <!-- ===== Akku / Schalter / Sicherung ===== -->
+  <rect class="box" x="20" y="70" width="90" height="70"/>
+  <text x="30" y="90" class="h">J1 Akku</text>
+  <text x="30" y="110">2: +</text><text x="30" y="130">1: GND</text>
+  <path class="vbat" d="M110 105 H150"/>
+  <rect class="box" x="150" y="85" width="70" height="40"/><text x="160" y="110">S1 Schalter</text>
+  <path class="vbat" d="M220 105 H260"/>
+  <rect class="box" x="260" y="90" width="70" height="30"/><text x="268" y="110">F1 Sich.</text>
+  <path class="vbat" d="M330 105 H1060"/>
+  <text x="560" y="98" class="vb">VBAT (Akku, geschaltet + abgesichert)</text>
+  <path class="gnd" d="M110 130 H140 V705 H1060"/>
+  <text x="560" y="722" class="t h">GND</text>
+
+  <!-- 100uF + Spannungsteiler -->
+  <path class="vbat" d="M420 105 V150"/>
+  <rect class="box" x="400" y="150" width="40" height="30"/><text x="404" y="170">18k</text>
+  <path class="sig" d="M420 180 V200 H470"/><text x="474" y="204" fill="#2a8a2a">→ D33 Akkuspannung (×0,357)</text>
+  <rect class="box" x="400" y="200" width="40" height="30"/><text x="404" y="220">10k</text>
+  <path class="gnd" d="M420 230 V250 H140"/>
+  <path class="vbat" d="M360 105 V160"/>
+  <rect class="box" x="335" y="160" width="50" height="30"/><text x="338" y="180">100µF</text>
+  <path class="gnd" d="M360 190 V250"/>
+
+  <!-- ===== 5V Regler ===== -->
+  <path class="vbat" d="M230 105 V0" stroke-opacity="0"/>
+  <path class="vbat" d="M300 105 V140 H300" stroke-opacity="0"/>
+  <path class="vbat" d="M380 105 V140" stroke-opacity="0"/>
+  <path class="vbat" d="M340 105 V130 H310 V300 H270"/>
+  <rect class="box" x="170" y="280" width="100" height="70"/>
+  <text x="180" y="300" class="h">U1 Regler</text>
+  <text x="180" y="318">(78xx, 3-pol.)</text>
+  <text x="235" y="296" font-size="11">IN</text><text x="172" y="345" font-size="11">OUT</text>
+  <text x="225" y="345" font-size="11">GND</text>
+  <path class="gnd" d="M240 350 V380 H140"/>
+  <rect class="box" x="285" y="320" width="45" height="26"/><text x="288" y="338">47µF</text>
+  <path class="vbat" d="M307 300 V320"/><path class="gnd" d="M307 346 V380 H240"/>
+  <path class="v5" d="M170 335 H150 V420 H1060"/>
+  <rect class="box" x="175" y="395" width="40" height="22"/><text x="178" y="411">1µF</text>
+  <text x="560" y="414" class="r5">+5V</text>
+
+  <!-- ===== Sensorstecker ===== -->
+  <g>
+    <text x="160" y="455" class="h">Sensorstecker J2–J6 (GND / 5V / Signal)</text>
+    <path class="v5" d="M180 420 V470"/><path class="v5" d="M260 420 V470"/><path class="v5" d="M340 420 V470"/><path class="v5" d="M420 420 V470"/><path class="v5" d="M500 420 V470"/>
+    <rect class="box" x="160" y="470" width="70" height="40"/><text x="166" y="488">J2 D35</text><text x="166" y="503" class="note">Licht L</text>
+    <rect class="box" x="240" y="470" width="70" height="40"/><text x="246" y="488">J3 D34</text><text x="246" y="503" class="note">Licht M</text>
+    <rect class="box" x="320" y="470" width="70" height="40"/><text x="326" y="488">J4 D39</text><text x="326" y="503" class="note">Licht R</text>
+    <rect class="box" x="400" y="470" width="70" height="40"/><text x="406" y="488">J5 D36</text><text x="406" y="503" class="note">Lidar Tx</text>
+    <rect class="box" x="480" y="470" width="70" height="40"/><text x="486" y="488">J6 D32</text><text x="486" y="503" class="note">frei</text>
+    <path class="gnd" d="M195 510 V530 H515 V510 M275 510 V530 M355 510 V530 M435 510 V530 M140 530 H195"/>
+  </g>
+
+  <!-- ===== ESP32 ===== -->
+  <rect class="box" x="160" y="570" width="390" height="110"/>
+  <text x="170" y="592" class="h">ESP32 DevKit (38-pol.)</text>
+  <text x="170" y="612">VIN/5V ← +5V     GND</text>
+  <text x="170" y="632">3V3 → Stiftleiste "3.3V"</text>
+  <text x="170" y="652" class="note">Stiftleisten 2×5: "GND/5V", "GND/3.3V", 3. Leiste (VCC?)</text>
+  <text x="170" y="670" class="note">Signale zu J2–J6 und U2–U5 (grün)</text>
+  <path class="v5" d="M560 420 V600 H550"/>
+  <path class="gnd" d="M355 680 V705"/>
+
+  <!-- ===== Motortreiber ===== -->
+  <g font-size="12">
+    <!-- generic driver block function: x positions -->
+    <rect class="box" x="640" y="150" width="400" height="95"/>
+    <text x="650" y="170" class="h">U2 Treiber → Hebemotor 2</text>
+    <text x="650" y="190">1 D23 / 2 D22 = Hebemotor 2 (Kanal A)</text>
+    <text x="650" y="208" class="note">5 D1 / 6 D3 = Kanal B unbenutzt (USB-Seriell TX0/RX0)</text>
+    <text x="650" y="232"><tspan class="vb">3 VM ← VBAT</tspan>    4 GND</text>
+
+    <rect class="box" x="640" y="265" width="400" height="80"/>
+    <text x="650" y="285" class="h">U3 Treiber → M1 + M2</text>
+    <text x="650" y="305">1 D21 / 2 D19 = M1 (vorn links)</text>
+    <text x="650" y="320">5 D5  / 6 D17 = M2 (vorn rechts)</text>
+    <text x="650" y="338"><tspan class="vb">3 VM ← VBAT</tspan>    4 GND</text>
+
+    <rect class="box" x="640" y="440" width="400" height="80"/>
+    <text x="650" y="460" class="h">U4 Treiber → M3 + M4</text>
+    <text x="650" y="480">1 D25 / 2 D26 = M3 (hinten links)</text>
+    <text x="650" y="495">5 D27 / 6 D14 = M4 (hinten rechts)</text>
+    <text x="650" y="513"><tspan class="vb">3 VM ← VBAT</tspan>    4 GND</text>
+
+    <rect class="box" x="640" y="555" width="400" height="95"/>
+    <text x="650" y="575" class="h">U5 Treiber → Hebemotor 1</text>
+    <text x="650" y="595">5 D16 / 6 D4 = Hebemotor 1 (Kanal B)</text>
+    <text x="650" y="613" class="note">1 D12 / 2 D13: Modulpins umgebogen (D12 = Boot-Pin)</text>
+    <text x="650" y="638"><tspan class="vb">3 VM ← VBAT</tspan>    4 GND</text>
+  </g>
+  <path class="vbat" d="M1060 105 V600 M1060 232 H1040 M1060 338 H1040 M1060 513 H1040 M1060 638 H1040" />
+  <path class="gnd" d="M1075 705 V0" stroke-opacity="0"/>
+  <path class="gnd" d="M620 705 V245 M620 245 H640 M620 345 H640 M620 520 H640 M620 650 H640"/>
+
+  <!-- Legende -->
+  <g font-size="12">
+    <line x1="20" y1="740" x2="50" y2="740" class="vbat"/><text x="56" y="744">VBAT (dicke blaue Bahn)</text>
+    <line x1="250" y1="740" x2="280" y2="740" class="gnd"/><text x="286" y="744">GND (dicke rote Bahn)</text>
+    <line x1="470" y1="740" x2="500" y2="740" class="v5"/><text x="506" y="744">+5V vom Regler</text>
+    <line x1="650" y1="740" x2="680" y2="740" class="sig"/><text x="686" y="744">Signal</text>
+  </g>
+  <text x="20" y="56" class="note">Hebemotoren: Endschalter unten jeweils in Reihe zum Motor (Diode parallel). Kondensator am Regler laut Team überbrückt – siehe Notiz.</text>
+</svg>
